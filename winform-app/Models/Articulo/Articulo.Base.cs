@@ -15,5 +15,9 @@ namespace winform_app.Models
         // Navegación
         public Marca Marca { get; set; }
         public Categoria Categoria { get; set; }
+
+        // Propiedades calculadas para binding en DataGridView
+        public string MarcaNombre => Marca?.Descripcion ?? string.Empty;
+        public string CategoriaNombre => Categoria?.Descripcion ?? string.Empty;
     }
 }

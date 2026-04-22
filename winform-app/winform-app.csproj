@@ -50,8 +50,25 @@
     <Compile Include="BaseDeDatos\DbConfig.cs" />
     <Compile Include="BaseDeDatos\EnvironmentVariables.cs" />
     <Compile Include="Controllers\ArticuloController.cs" />
+    <Compile Include="Controllers\CategoriaController.cs" />
+    <Compile Include="Controllers\MarcaController.cs" />
+    <Compile Include="Forms\Articulo\ArticuloDeleteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Articulo\ArticuloDeleteForm.Designer.cs">
+      <DependentUpon>ArticuloDeleteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Articulo\ArticuloEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Articulo\ArticuloEditForm.Designer.cs">
+      <DependentUpon>ArticuloEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Articulo\Articulo.Base.cs" />
     <Compile Include="Models\Articulo\Articulo.Delete.cs" />
@@ -70,6 +87,9 @@
     <Compile Include="Models\Marca\Marca.Write.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\Articulo\ArticuloDeleteForm.resx">
+      <DependentUpon>ArticuloDeleteForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
