@@ -46,6 +46,7 @@ namespace winform_app.baseDeDatos
             if (string.IsNullOrWhiteSpace(connectionString))
                 connectionString = "";
 
+
             conexion = new SqlConnection(connectionString);
             comando = new SqlCommand();
             comando.CommandType = CommandType.Text;
@@ -67,9 +68,9 @@ namespace winform_app.baseDeDatos
                     conexion.Open();
                 lector = comando.ExecuteReader();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
