@@ -107,10 +107,7 @@ namespace winform_app.Controllers
            {
                 throw ex;
            }
-            finally
-                {
-                datos.cerrarConexion();
-            }
+            // sin finally xq es IDisposable
         }
     }
 }
