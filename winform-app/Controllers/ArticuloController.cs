@@ -44,11 +44,11 @@ namespace winform_app.Controllers
             {
                 // consulta -> lo que se le pide a SQL
                 //Nombre  y  Marca quedan vacios a no ser q pasen los ifs
-               string consulta = "SELECT A.Id, A.Nombre, M.Descripcion as Marca, C.Descripcion as Categoria, A.Precio " +
+               string consulta = "SELECT A.Id, A.Nombre,A.Codigo,A.Descripcion, M.Descripcion as Marca, C.Descripcion as Categoria, A.Precio " +
                           "FROM ARTICULOS A " +
                           "INNER JOIN MARCAS M ON A.IdMarca = M.Id " +
                           "INNER JOIN CATEGORIAS C ON A.IdCategoria = C.Id " +
-                          "WHERE 1=1 ";
+                          "WHERE 1=1 "; // para que haya where, y puedan estar los AND despues
 
                 if (!string.IsNullOrWhiteSpace(nombre))
                     consulta += " AND A.Nombre LIKE @nombre ";
@@ -67,7 +67,7 @@ namespace winform_app.Controllers
                     datos.setearParametro("@nombre", "%" + nombre + "%");
 
                 if (!string.IsNullOrWhiteSpace(marca))
-                    datos.setearParametro("@marca", marca);
+                   datos.setearParametro("@marca", marca);
 
                 if (!string.IsNullOrWhiteSpace(categoria))
                     datos.setearParametro("@categoria", categoria);
@@ -80,31 +80,37 @@ namespace winform_app.Controllers
 
 
 
-                while (datos.Lector.Read())
+                while (datos.Lector.Read()) // recorre mientras sea true 1 por 1
                 {
-                    Articulo aux = new Articulo();
+                    Articulo aux = new Articulo(); // guardo los datos en un obj articulo
                     {
                         aux.Id = (int)datos.Lector["Id"];
                         aux.Nombre = (string)datos.Lector["Nombre"];
+                        aux.Codigo = (string)datos.Lector["Codigo"];
+                        aux.Descripcion = (string)datos.Lector["Descripcion"];
                         aux.Marca = new Marca();
-                        aux.Marca.Descripcion = (string)datos.Lector["Marca"];
+                        aux.Marca.Descripcion = (string)datos.Lector["Marca"]; //m.descripcion tiene as Marca
                         aux.Categoria = new Categoria();
                         aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
                         aux.Precio = (decimal)datos.Lector["Precio"];
                     };
 
-                    lista.Add(aux);
+                    lista.Add(aux); // guardo obj articulo en la lista 
                 }
 
-
+               
                 return lista;
                
             }
 
            catch(Exception ex)
            {
-            throw ex;
+                throw ex;
            }
+            finally
+                {
+                datos.cerrarConexion();
+            }
         }
     }
 }

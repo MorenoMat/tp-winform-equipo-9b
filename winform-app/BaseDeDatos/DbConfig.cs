@@ -4,13 +4,13 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Runtime.Serialization.Json;
 
-namespace winform_app.baseDeDatos
+namespace winform_app.baseDeDatos 
 {
     // Implementación de AccesoDatos basada en el ejemplo proporcionado.
     // La conexión permanece privada; la clase expone operaciones para consultas/acciones y
     // el lector (SqlDataReader) cuando corresponde. Implementa IDisposable para liberar recursos.
-    public class AccesoDatos : IDisposable
-    {
+    public class AccesoDatos : IDisposable    // services
+    {  
         private SqlConnection conexion;
         private SqlCommand comando;
         private SqlDataReader lector;

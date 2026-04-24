@@ -127,6 +127,15 @@ namespace winform_app.Forms
 
             _dgvArticulos.DataSource = _articuloController.filtrar(nombre, marca, categoria);
 
+
+
+            // Ocultamos las columnas que no queremos ver
+            _dgvArticulos.Columns["Id"].Visible = false;
+            _dgvArticulos.Columns["Marca"].Visible = false;
+            _dgvArticulos.Columns["Categoria"].Visible = false;
+            _dgvArticulos.Columns["MarcaId"].Visible = false;
+            _dgvArticulos.Columns["CategoriaId"].Visible = false;
+
         }
 
         // Botón Limpiar
