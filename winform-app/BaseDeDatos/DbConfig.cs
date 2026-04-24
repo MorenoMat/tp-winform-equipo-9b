@@ -70,7 +70,7 @@ namespace winform_app.baseDeDatos
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw ex; // Fijate si tenes activo el docker/contenedor 
             }
         }
 

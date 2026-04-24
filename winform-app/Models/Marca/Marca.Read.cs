@@ -19,11 +19,16 @@ namespace winform_app.Models
                     {
                         Id = lector.GetInt32(lector.GetOrdinal("Id")),
                         Descripcion = lector.GetString(lector.GetOrdinal("Descripcion"))
-                    });
+                    });  // es igual q poner marca m ;   m.Id = ...
                 }
                 datos.cerrarConexion();
             }
             return lista;
         }
+
+    public override string ToString() // sobreescribo ToString() xq si no me devuelve el nombre de la clase 
+        {
+            return Descripcion;
+        }
     }
-}
+ }

@@ -25,5 +25,11 @@ namespace winform_app.Models
             }
             return lista;
         }
+        public override string ToString() // sobreescribo ToString() xq si no me devuelve el nombre de la clase 
+        {
+            return Descripcion;
+        }
+
+
     }
 }
