@@ -7,7 +7,7 @@ namespace winform_app.Models
     {
         public void Update()
         {
-            const string sql = @"UPDATE ARTICULO SET Codigo = @Codigo, Nombre = @Nombre, Precio = @Precio, Descripcion = @Descripcion, IdMarca = @IdMarca, IdCategoria = @IdCategoria WHERE Id = @Id";
+            const string sql = @"UPDATE ARTICULOS SET Codigo = @Codigo, Nombre = @Nombre, Precio = @Precio, Descripcion = @Descripcion, IdMarca = @IdMarca, IdCategoria = @IdCategoria WHERE Id = @Id";
 
             using (var datos = new AccesoDatos())
             {

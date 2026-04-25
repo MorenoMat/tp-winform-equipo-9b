@@ -7,7 +7,7 @@ namespace winform_app.Models
     {
         public void Delete()
         {
-            const string sql = @"DELETE FROM ARTICULO WHERE Id = @Id";
+            const string sql = @"DELETE FROM ARTICULOS WHERE Id = @Id";
 
             using (var datos = new AccesoDatos())
             {

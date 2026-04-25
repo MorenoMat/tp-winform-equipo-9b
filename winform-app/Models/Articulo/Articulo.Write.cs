@@ -7,7 +7,7 @@ namespace winform_app.Models
     {
         public void Add()
         {
-            const string sql = @"INSERT INTO ARTICULO (Codigo, Nombre, Precio, Descripcion, IdMarca, IdCategoria)
+            const string sql = @"INSERT INTO ARTICULOS (Codigo, Nombre, Precio, Descripcion, IdMarca, IdCategoria)
                                   VALUES (@Codigo, @Nombre, @Precio, @Descripcion, @IdMarca, @IdCategoria)";
 
             using (var datos = new AccesoDatos())

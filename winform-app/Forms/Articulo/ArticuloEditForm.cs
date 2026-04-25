@@ -22,6 +22,7 @@ namespace winform_app.Forms.Articulo
             SuscribirEventos();
         }
 
+
         // Modo edición: con artículo existente
         public ArticuloEditForm(Models.Articulo articulo)
         {
@@ -64,17 +65,22 @@ namespace winform_app.Forms.Articulo
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
-            if (!Validar()) return;
+            
 
-            _articulo.Codigo = _txtCodigo.Text.Trim();
-            _articulo.Nombre = _txtNombre.Text.Trim();
-            _articulo.Precio = decimal.Parse(_txtPrecio.Text.Trim());
-            _articulo.Descripcion = _txtDescripcion.Text.Trim();
-            _articulo.MarcaId = (int)_cmbMarca.SelectedValue;
-            _articulo.CategoriaId = (int)_cmbCategoria.SelectedValue;
+
 
             try
             {
+                if (!Validar()) return; //si devuelve falso retorna
+                _articulo.Codigo = _txtCodigo.Text.Trim();
+                _articulo.Nombre = _txtNombre.Text.Trim(); // trimquita espacios en blanco 
+                _articulo.Precio = decimal.Parse(_txtPrecio.Text.Trim());
+                _articulo.Descripcion = _txtDescripcion.Text.Trim();
+                _articulo.MarcaId = (int)_cmbMarca.SelectedValue;
+                _articulo.CategoriaId = (int)_cmbCategoria.SelectedValue;
+
+
+
                 if (_articulo.Id == 0)
                         _articuloController.Add(_articulo);
                     else
@@ -85,7 +91,7 @@ namespace winform_app.Forms.Articulo
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al guardar: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al guardar: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);  
             }
         }
 
