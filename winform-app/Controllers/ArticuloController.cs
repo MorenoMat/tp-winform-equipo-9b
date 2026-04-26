@@ -18,6 +18,11 @@ namespace winform_app.Controllers
             return Articulo.GetById(id);
         }
 
+        public bool ExisteConNombre(string nombre, int excludeId = 0)
+        {
+            return Articulo.ExisteConNombre(nombre, excludeId);
+        }
+
         public void Add(Articulo articulo)
         {
             articulo.Add();

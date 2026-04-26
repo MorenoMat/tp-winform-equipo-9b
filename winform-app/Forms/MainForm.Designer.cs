@@ -107,6 +107,7 @@ namespace winform_app.Forms
             this._splitDetail = new System.Windows.Forms.SplitContainer();
             this._dgvArticulos = new System.Windows.Forms.DataGridView();
             this._grpDetalle = new System.Windows.Forms.GroupBox();
+            this._picImagen = new System.Windows.Forms.PictureBox();
             this._lblDetalleCodigo = new System.Windows.Forms.Label();
             this._lblDetalleCodigoVal = new System.Windows.Forms.Label();
             this._lblDetalleNombre = new System.Windows.Forms.Label();
@@ -119,7 +120,6 @@ namespace winform_app.Forms
             this._lblDetalleCategoriaVal = new System.Windows.Forms.Label();
             this._lblDetalleDesc = new System.Windows.Forms.Label();
             this._lblDetalleDescVal = new System.Windows.Forms.Label();
-            this._picImagen = new System.Windows.Forms.PictureBox();
             this._tabControl = new System.Windows.Forms.TabControl();
             this._tabArticulos = new System.Windows.Forms.TabPage();
             this._tabImagenes = new System.Windows.Forms.TabPage();
@@ -146,14 +146,14 @@ namespace winform_app.Forms
             this._splitDetail.Panel2.SuspendLayout();
             this._splitDetail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._dgvArticulos)).BeginInit();
+            this._grpDetalle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._picImagen)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this._dgvImagenes)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this._picPreviewUrl)).BeginInit();
-            this._grpGestionImagenes.SuspendLayout();
+            this._tabControl.SuspendLayout();
             this._tabArticulos.SuspendLayout();
             this._tabImagenes.SuspendLayout();
-            this._tabControl.SuspendLayout();
-            this._grpDetalle.SuspendLayout();
+            this._grpGestionImagenes.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._dgvImagenes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._picPreviewUrl)).BeginInit();
             this._statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -199,7 +199,7 @@ namespace winform_app.Forms
             // 
             this._splitMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this._splitMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this._splitMain.Location = new System.Drawing.Point(0, 25);
+            this._splitMain.Location = new System.Drawing.Point(3, 3);
             this._splitMain.Name = "_splitMain";
             // 
             // _splitMain.Panel1
@@ -209,7 +209,7 @@ namespace winform_app.Forms
             // _splitMain.Panel2
             // 
             this._splitMain.Panel2.Controls.Add(this._splitDetail);
-            this._splitMain.Size = new System.Drawing.Size(1000, 573);
+            this._splitMain.Size = new System.Drawing.Size(986, 541);
             this._splitMain.SplitterDistance = 200;
             this._splitMain.TabIndex = 1;
             // 
@@ -226,7 +226,7 @@ namespace winform_app.Forms
             this._grpFiltros.Dock = System.Windows.Forms.DockStyle.Fill;
             this._grpFiltros.Location = new System.Drawing.Point(0, 0);
             this._grpFiltros.Name = "_grpFiltros";
-            this._grpFiltros.Size = new System.Drawing.Size(200, 573);
+            this._grpFiltros.Size = new System.Drawing.Size(200, 541);
             this._grpFiltros.TabIndex = 0;
             this._grpFiltros.TabStop = false;
             this._grpFiltros.Text = "Filtros";
@@ -318,8 +318,8 @@ namespace winform_app.Forms
             // _splitDetail.Panel2
             // 
             this._splitDetail.Panel2.Controls.Add(this._grpDetalle);
-            this._splitDetail.Size = new System.Drawing.Size(796, 573);
-            this._splitDetail.SplitterDistance = 340;
+            this._splitDetail.Size = new System.Drawing.Size(782, 541);
+            this._splitDetail.SplitterDistance = 321;
             this._splitDetail.TabIndex = 0;
             // 
             // _dgvArticulos
@@ -332,7 +332,7 @@ namespace winform_app.Forms
             this._dgvArticulos.Name = "_dgvArticulos";
             this._dgvArticulos.ReadOnly = true;
             this._dgvArticulos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this._dgvArticulos.Size = new System.Drawing.Size(796, 340);
+            this._dgvArticulos.Size = new System.Drawing.Size(782, 321);
             this._dgvArticulos.TabIndex = 0;
             this._dgvArticulos.SelectionChanged += new System.EventHandler(this.DgvArticulos_SelectionChanged);
             // 
@@ -354,10 +354,21 @@ namespace winform_app.Forms
             this._grpDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
             this._grpDetalle.Location = new System.Drawing.Point(0, 0);
             this._grpDetalle.Name = "_grpDetalle";
-            this._grpDetalle.Size = new System.Drawing.Size(796, 229);
+            this._grpDetalle.Size = new System.Drawing.Size(782, 216);
             this._grpDetalle.TabIndex = 0;
             this._grpDetalle.TabStop = false;
             this._grpDetalle.Text = "Detalle";
+            // 
+            // _picImagen
+            // 
+            this._picImagen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._picImagen.Location = new System.Drawing.Point(610, 20);
+            this._picImagen.Name = "_picImagen";
+            this._picImagen.Size = new System.Drawing.Size(160, 160);
+            this._picImagen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this._picImagen.TabIndex = 12;
+            this._picImagen.TabStop = false;
+            this._picImagen.Click += new System.EventHandler(this._picImagen_Click);
             // 
             // _lblDetalleCodigo
             // 
@@ -455,39 +466,36 @@ namespace winform_app.Forms
             this._lblDetalleDescVal.TabIndex = 11;
             this._lblDetalleDescVal.Text = "-";
             // 
-            // _picImagen
-            // 
-            this._picImagen.Location = new System.Drawing.Point(610, 20);
-            this._picImagen.Name = "_picImagen";
-            this._picImagen.Size = new System.Drawing.Size(160, 160);
-            this._picImagen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this._picImagen.TabIndex = 12;
-            this._picImagen.TabStop = false;
-            this._picImagen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            // 
             // _tabControl
             // 
-            this._tabControl.Controls.AddRange(new System.Windows.Forms.TabPage[] {
-            this._tabArticulos,
-            this._tabImagenes});
+            this._tabControl.Controls.Add(this._tabArticulos);
+            this._tabControl.Controls.Add(this._tabImagenes);
             this._tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._tabControl.Location = new System.Drawing.Point(0, 25);
             this._tabControl.Name = "_tabControl";
             this._tabControl.SelectedIndex = 0;
+            this._tabControl.Size = new System.Drawing.Size(1000, 573);
             this._tabControl.TabIndex = 1;
             // 
             // _tabArticulos
             // 
             this._tabArticulos.Controls.Add(this._splitMain);
+            this._tabArticulos.Location = new System.Drawing.Point(4, 22);
             this._tabArticulos.Name = "_tabArticulos";
             this._tabArticulos.Padding = new System.Windows.Forms.Padding(3);
+            this._tabArticulos.Size = new System.Drawing.Size(992, 547);
+            this._tabArticulos.TabIndex = 0;
             this._tabArticulos.Text = "Artículos";
             this._tabArticulos.UseVisualStyleBackColor = true;
             // 
             // _tabImagenes
             // 
             this._tabImagenes.Controls.Add(this._grpGestionImagenes);
+            this._tabImagenes.Location = new System.Drawing.Point(4, 22);
             this._tabImagenes.Name = "_tabImagenes";
             this._tabImagenes.Padding = new System.Windows.Forms.Padding(3);
+            this._tabImagenes.Size = new System.Drawing.Size(192, 74);
+            this._tabImagenes.TabIndex = 1;
             this._tabImagenes.Text = "Imágenes";
             this._tabImagenes.UseVisualStyleBackColor = true;
             // 
@@ -503,7 +511,10 @@ namespace winform_app.Forms
             this._grpGestionImagenes.Controls.Add(this._btnAgregarUrl);
             this._grpGestionImagenes.Controls.Add(this._btnEliminarUrl);
             this._grpGestionImagenes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._grpGestionImagenes.Location = new System.Drawing.Point(3, 3);
             this._grpGestionImagenes.Name = "_grpGestionImagenes";
+            this._grpGestionImagenes.Size = new System.Drawing.Size(186, 68);
+            this._grpGestionImagenes.TabIndex = 0;
             this._grpGestionImagenes.TabStop = false;
             this._grpGestionImagenes.Text = "Gestión de Imágenes";
             // 
@@ -512,6 +523,7 @@ namespace winform_app.Forms
             this._lblSelArticulo.Location = new System.Drawing.Point(8, 24);
             this._lblSelArticulo.Name = "_lblSelArticulo";
             this._lblSelArticulo.Size = new System.Drawing.Size(62, 16);
+            this._lblSelArticulo.TabIndex = 0;
             this._lblSelArticulo.Text = "Artículo:";
             // 
             // _cmbSelArticulo
@@ -528,6 +540,7 @@ namespace winform_app.Forms
             this._lblImagenesCargadas.Location = new System.Drawing.Point(8, 55);
             this._lblImagenesCargadas.Name = "_lblImagenesCargadas";
             this._lblImagenesCargadas.Size = new System.Drawing.Size(140, 16);
+            this._lblImagenesCargadas.TabIndex = 1;
             this._lblImagenesCargadas.Text = "Imágenes cargadas:";
             // 
             // _dgvImagenes
@@ -550,6 +563,7 @@ namespace winform_app.Forms
             this._picPreviewUrl.Name = "_picPreviewUrl";
             this._picPreviewUrl.Size = new System.Drawing.Size(200, 200);
             this._picPreviewUrl.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this._picPreviewUrl.TabIndex = 2;
             this._picPreviewUrl.TabStop = false;
             // 
             // _lblNuevaUrl
@@ -557,6 +571,7 @@ namespace winform_app.Forms
             this._lblNuevaUrl.Location = new System.Drawing.Point(8, 507);
             this._lblNuevaUrl.Name = "_lblNuevaUrl";
             this._lblNuevaUrl.Size = new System.Drawing.Size(65, 16);
+            this._lblNuevaUrl.TabIndex = 3;
             this._lblNuevaUrl.Text = "Nueva URL:";
             // 
             // _txtNuevaUrl
@@ -621,16 +636,16 @@ namespace winform_app.Forms
             this._splitDetail.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._splitDetail)).EndInit();
             this._splitDetail.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this._picImagen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._dgvArticulos)).EndInit();
             this._grpDetalle.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this._picImagen)).EndInit();
+            this._tabControl.ResumeLayout(false);
             this._tabArticulos.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this._dgvImagenes)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this._picPreviewUrl)).EndInit();
+            this._tabImagenes.ResumeLayout(false);
             this._grpGestionImagenes.ResumeLayout(false);
             this._grpGestionImagenes.PerformLayout();
-            this._tabImagenes.ResumeLayout(false);
-            this._tabControl.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this._dgvImagenes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._picPreviewUrl)).EndInit();
             this._statusStrip.ResumeLayout(false);
             this._statusStrip.PerformLayout();
             this.ResumeLayout(false);

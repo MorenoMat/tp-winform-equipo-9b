@@ -133,5 +133,23 @@ namespace winform_app.Models
                 return art;
             }
         }
+
+        // excludeId: en modo edición se pasa el Id del artículo actual para no compararlo consigo mismo
+        public static bool ExisteConNombre(string nombre, int excludeId = 0)
+        {
+            const string sql = "SELECT COUNT(*) FROM ARTICULOS WHERE LOWER(Nombre) = LOWER(@Nombre) AND Id <> @ExcludeId";
+
+            using (var datos = new AccesoDatos())
+            {
+                datos.setearConsulta(sql);
+                datos.setearParametro("@Nombre", nombre);
+                datos.setearParametro("@ExcludeId", excludeId);
+                datos.ejecutarLectura();
+                var lector = datos.Lector;
+                var count = lector != null && lector.Read() ? lector.GetInt32(0) : 0;
+                datos.cerrarConexion();
+                return count > 0;
+            }
+        }
     }
 }

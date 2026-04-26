@@ -115,6 +115,12 @@ namespace winform_app.Forms.Articulo
                 _txtNombre.Focus();
                 return false;
             }
+            if (_articuloController.ExisteConNombre(_txtNombre.Text.Trim(), _articulo.Id))
+            {
+                MessageBox.Show("Ya existe un artículo con ese nombre.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _txtNombre.Focus();
+                return false;
+            }
             if (!decimal.TryParse(_txtPrecio.Text, out _))
             {
                 MessageBox.Show("El precio debe ser un número válido.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);

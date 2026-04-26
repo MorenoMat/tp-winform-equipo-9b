@@ -2,7 +2,6 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Net;
-using System.Net.Http;
 using System.Reflection.Emit;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,7 +18,6 @@ namespace winform_app.Forms
         private readonly MarcaController _marcaController = new MarcaController();
         private readonly CategoriaController _categoriaController = new CategoriaController();
         private readonly ImagenController _imagenController = new ImagenController();
-        private static readonly HttpClient _httpClient = new HttpClient();
         private CancellationTokenSource _imagenCts;
         
         public MainForm()
@@ -54,11 +52,45 @@ namespace winform_app.Forms
             {
                 var lista = _articuloController.GetAll();
                 _dgvArticulos.DataSource = lista;
+                ConfigurarColumnasArticulos();
                 _lblStatus.Text = $"{lista.Count} artículo(s) encontrado(s)";
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al cargar artículos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ConfigurarColumnasArticulos()
+        {
+            var columnas = _dgvArticulos.Columns;
+            if (columnas.Count == 0) return;
+
+            // Ocultar columnas técnicas / de navegación
+            var ocultas = new[] { "Id", "MarcaId", "CategoriaId", "Marca", "Categoria", "Descripcion" };
+            foreach (var nombre in ocultas)
+                if (columnas.Contains(nombre))
+                    columnas[nombre].Visible = false;
+
+            // Renombrar encabezados visibles
+            if (columnas.Contains("Codigo"))       columnas["Codigo"].HeaderText       = "Código";
+            if (columnas.Contains("Nombre"))       columnas["Nombre"].HeaderText       = "Nombre";
+            if (columnas.Contains("Precio"))       columnas["Precio"].HeaderText       = "Precio";
+            if (columnas.Contains("MarcaNombre"))  columnas["MarcaNombre"].HeaderText  = "Marca";
+            if (columnas.Contains("CategoriaNombre")) columnas["CategoriaNombre"].HeaderText = "Categoría";
+
+            // Orden de las columnas visibles
+            if (columnas.Contains("Codigo"))          columnas["Codigo"].DisplayIndex          = 0;
+            if (columnas.Contains("Nombre"))          columnas["Nombre"].DisplayIndex          = 1;
+            if (columnas.Contains("MarcaNombre"))     columnas["MarcaNombre"].DisplayIndex     = 2;
+            if (columnas.Contains("CategoriaNombre")) columnas["CategoriaNombre"].DisplayIndex = 3;
+            if (columnas.Contains("Precio"))          columnas["Precio"].DisplayIndex          = 4;
+
+            // Formato moneda para Precio
+            if (columnas.Contains("Precio"))
+            {
+                columnas["Precio"].DefaultCellStyle.Format = "$ #,##0.00";
+                columnas["Precio"].DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             }
         }
 
@@ -86,34 +118,24 @@ namespace winform_app.Forms
 
         private async Task CargarImagenAsync(int idArticulo)
         {
-            // Cancelar descarga anterior si sigue en curso
             _imagenCts?.Cancel();
             _imagenCts?.Dispose();
             _imagenCts = new CancellationTokenSource();
             var token = _imagenCts.Token;
 
+            var anterior = _picImagen.Image;
             _picImagen.Image = null;
+            _picImagen.Refresh();
+            anterior?.Dispose();
+
             var imagenes = _imagenController.GetByArticuloId(idArticulo);
             if (imagenes == null || imagenes.Count == 0) return;
 
-            try
-            {
-                _httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd("Mozilla/5.0");
-                var data = await _httpClient.GetByteArrayAsync(imagenes[0].ImagenUrl);
+            var bmp = await DescargarBitmapAsync(imagenes[0].ImagenUrl);
+            if (token.IsCancellationRequested) { bmp?.Dispose(); return; }
 
-                // Si se cambió la selección mientras descargaba, descartar
-                if (token.IsCancellationRequested) return;
-
-                using (var ms = new MemoryStream(data))
-                {
-                    _picImagen.Image = Image.FromStream(ms);
-                }
-            }
-            catch
-            {
-                if (!token.IsCancellationRequested)
-                    _picImagen.Image = null;
-            }
+            _picImagen.Image = bmp;
+            _picImagen.Refresh();
         }
 
         // Botón Nuevo
@@ -170,15 +192,7 @@ namespace winform_app.Forms
             string categoria = _cmbCategoria.Text;
 
             _dgvArticulos.DataSource = _articuloController.filtrar(nombre, marca, categoria);
-
-
-
-            // Ocultamos las columnas que no queremos ver
-            _dgvArticulos.Columns["Id"].Visible = false;
-            _dgvArticulos.Columns["Marca"].Visible = false;
-            _dgvArticulos.Columns["Categoria"].Visible = false;
-            _dgvArticulos.Columns["MarcaId"].Visible = false;
-            _dgvArticulos.Columns["CategoriaId"].Visible = false;
+            ConfigurarColumnasArticulos();
 
         }
 
@@ -267,8 +281,22 @@ namespace winform_app.Forms
 
         private async Task CargarPreviewAsync(string url)
         {
+            var anterior = _picPreviewUrl.Image;
             _picPreviewUrl.Image = null;
             _picPreviewUrl.Refresh();
+            anterior?.Dispose();
+
+            _picPreviewUrl.Image = await DescargarBitmapAsync(url);
+            _picPreviewUrl.Refresh();
+        }
+
+        private async Task<Bitmap> DescargarBitmapAsync(string url)
+        {
+            return await DescargarBitmapDesdeUrlAsync(url) ?? CrearImagenPlaceholder();
+        }
+
+        private static async Task<Bitmap> DescargarBitmapDesdeUrlAsync(string url)
+        {
             try
             {
                 var data = await Task.Run(() =>
@@ -279,16 +307,36 @@ namespace winform_app.Forms
                         return wc.DownloadData(url);
                     }
                 });
-                Bitmap bmp;
+
                 using (var ms = new MemoryStream(data))
-                    bmp = new Bitmap(ms);
-                _picPreviewUrl.Image = bmp;
-                _picPreviewUrl.Refresh();
+                using (var tmp = new Bitmap(ms))
+                    return new Bitmap(tmp);
             }
             catch
             {
-                _picPreviewUrl.Image = null;
+                return null;
             }
+        }
+
+        private static Bitmap CrearImagenPlaceholder()
+        {
+            var bmp = new Bitmap(160, 160);
+            using (var g = Graphics.FromImage(bmp))
+            {
+                g.Clear(Color.FromArgb(220, 220, 220));
+                using (var pen = new Pen(Color.Gray, 2))
+                    g.DrawRectangle(pen, 4, 4, 151, 151);
+                using (var font = new Font("Arial", 9, FontStyle.Regular))
+                using (var brush = new SolidBrush(Color.DimGray))
+                {
+                    var texto = "Sin imagen";
+                    var tam = g.MeasureString(texto, font);
+                    g.DrawString(texto, font, brush,
+                        (bmp.Width - tam.Width) / 2f,
+                        (bmp.Height - tam.Height) / 2f);
+                }
+            }
+            return bmp;
         }
 
         private void BtnAgregarUrl_Click(object sender, EventArgs e)
@@ -340,6 +388,11 @@ namespace winform_app.Forms
             {
                 MessageBox.Show("Seleccioná una imagen para eliminar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void _picImagen_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
