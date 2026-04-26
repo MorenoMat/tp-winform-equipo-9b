@@ -51,6 +51,7 @@
     <Compile Include="BaseDeDatos\EnvironmentVariables.cs" />
     <Compile Include="Controllers\ArticuloController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
+    <Compile Include="Controllers\ImagenController.cs" />
     <Compile Include="Controllers\MarcaController.cs" />
     <Compile Include="Forms\Articulo\ArticuloDeleteForm.cs">
       <SubType>Form</SubType>
@@ -80,6 +81,11 @@
     <Compile Include="Models\Categoria\Categoria.Read.cs" />
     <Compile Include="Models\Categoria\Categoria.Update.cs" />
     <Compile Include="Models\Categoria\Categoria.Write.cs" />
+    <Compile Include="Models\Imagen\Imagen.Base.cs" />
+    <Compile Include="Models\Imagen\Imagen.Delete.cs" />
+    <Compile Include="Models\Imagen\Imagen.Read.cs" />
+    <Compile Include="Models\Imagen\Imagen.Update.cs" />
+    <Compile Include="Models\Imagen\Imagen.Write.cs" />
     <Compile Include="Models\Marca\Marca.Base.cs" />
     <Compile Include="Models\Marca\Marca.Delete.cs" />
     <Compile Include="Models\Marca\Marca.Read.cs" />

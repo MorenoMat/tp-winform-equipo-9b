@@ -1,5 +1,11 @@
 using System;
+using System.Drawing;
+using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Reflection.Emit;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using winform_app.Controllers;
 using winform_app.Forms.Articulo;
@@ -12,6 +18,9 @@ namespace winform_app.Forms
         private readonly ArticuloController _articuloController = new ArticuloController();
         private readonly MarcaController _marcaController = new MarcaController();
         private readonly CategoriaController _categoriaController = new CategoriaController();
+        private readonly ImagenController _imagenController = new ImagenController();
+        private static readonly HttpClient _httpClient = new HttpClient();
+        private CancellationTokenSource _imagenCts;
         
         public MainForm()
         {
@@ -21,8 +30,9 @@ namespace winform_app.Forms
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            CargarFiltros(); //funciones
+            CargarFiltros();
             CargarArticulos();
+            CargarComboArticulosImagenes();
         }
 
         private void CargarFiltros()
@@ -59,7 +69,7 @@ namespace winform_app.Forms
         }
 
         // Selección en grilla → mostrar detalle
-        private void DgvArticulos_SelectionChanged(object sender, EventArgs e)
+        private async void DgvArticulos_SelectionChanged(object sender, EventArgs e)
         {
             var art = ArticuloSeleccionado();
             if (art == null) return;
@@ -70,6 +80,40 @@ namespace winform_app.Forms
             _lblDetalleMarcaVal.Text = art.MarcaNombre;
             _lblDetalleCategoriaVal.Text = art.CategoriaNombre;
             _lblDetalleDescVal.Text = art.Descripcion;
+
+            await CargarImagenAsync(art.Id);
+        }
+
+        private async Task CargarImagenAsync(int idArticulo)
+        {
+            // Cancelar descarga anterior si sigue en curso
+            _imagenCts?.Cancel();
+            _imagenCts?.Dispose();
+            _imagenCts = new CancellationTokenSource();
+            var token = _imagenCts.Token;
+
+            _picImagen.Image = null;
+            var imagenes = _imagenController.GetByArticuloId(idArticulo);
+            if (imagenes == null || imagenes.Count == 0) return;
+
+            try
+            {
+                _httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd("Mozilla/5.0");
+                var data = await _httpClient.GetByteArrayAsync(imagenes[0].ImagenUrl);
+
+                // Si se cambió la selección mientras descargaba, descartar
+                if (token.IsCancellationRequested) return;
+
+                using (var ms = new MemoryStream(data))
+                {
+                    _picImagen.Image = Image.FromStream(ms);
+                }
+            }
+            catch
+            {
+                if (!token.IsCancellationRequested)
+                    _picImagen.Image = null;
+            }
         }
 
         // Botón Nuevo
@@ -175,6 +219,127 @@ namespace winform_app.Forms
 
         private void _lblCategoria_Click(object sender, EventArgs e)
         { //label
+        }
+
+        // ── Tab Imágenes ────────────────────────────────────────────
+
+        private void CargarComboArticulosImagenes()
+        {
+            _cmbSelArticulo.DataSource = _articuloController.GetAll();
+            _cmbSelArticulo.DisplayMember = "Nombre";
+            _cmbSelArticulo.ValueMember = "Id";
+            _cmbSelArticulo.SelectedIndex = -1;
+        }
+
+        private void CargarImagenesDeArticulo()
+        {
+            if (_cmbSelArticulo.SelectedItem == null)
+            {
+                _dgvImagenes.DataSource = null;
+                return;
+            }
+            var art = (Models.Articulo)_cmbSelArticulo.SelectedItem;
+            var lista = _imagenController.GetByArticuloId(art.Id);
+            _dgvImagenes.DataSource = lista;
+
+            if (_dgvImagenes.Columns.Contains("Articulo"))
+                _dgvImagenes.Columns["Articulo"].Visible = false;
+            if (_dgvImagenes.Columns.Contains("IdArticulo"))
+                _dgvImagenes.Columns["IdArticulo"].Visible = false;
+            if (_dgvImagenes.Columns.Contains("Id"))
+                _dgvImagenes.Columns["Id"].Visible = false;
+
+            _picPreviewUrl.Image = null;
+        }
+
+        private void CmbSelArticulo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CargarImagenesDeArticulo();
+        }
+
+        private async void DgvImagenes_SelectionChanged(object sender, EventArgs e)
+        {
+            if (_dgvImagenes.CurrentRow?.DataBoundItem is Models.Imagen img)
+                await CargarPreviewAsync(img.ImagenUrl);
+            else
+                _picPreviewUrl.Image = null;
+        }
+
+        private async Task CargarPreviewAsync(string url)
+        {
+            _picPreviewUrl.Image = null;
+            _picPreviewUrl.Refresh();
+            try
+            {
+                var data = await Task.Run(() =>
+                {
+                    using (var wc = new WebClient())
+                    {
+                        wc.Headers.Add("User-Agent", "Mozilla/5.0");
+                        return wc.DownloadData(url);
+                    }
+                });
+                Bitmap bmp;
+                using (var ms = new MemoryStream(data))
+                    bmp = new Bitmap(ms);
+                _picPreviewUrl.Image = bmp;
+                _picPreviewUrl.Refresh();
+            }
+            catch
+            {
+                _picPreviewUrl.Image = null;
+            }
+        }
+
+        private void BtnAgregarUrl_Click(object sender, EventArgs e)
+        {
+            var url = _txtNuevaUrl.Text.Trim();
+            if (string.IsNullOrEmpty(url))
+            {
+                MessageBox.Show("Ingresá una URL válida.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (_cmbSelArticulo.SelectedItem == null)
+            {
+                MessageBox.Show("Seleccioná un artículo.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var art = (Models.Articulo)_cmbSelArticulo.SelectedItem;
+            try
+            {
+                _imagenController.Add(new Models.Imagen { IdArticulo = art.Id, ImagenUrl = url });
+                _txtNuevaUrl.Clear();
+                CargarImagenesDeArticulo();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al agregar imagen: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void BtnEliminarUrl_Click(object sender, EventArgs e)
+        {
+            if (_dgvImagenes.CurrentRow?.DataBoundItem is Models.Imagen img)
+            {
+                var confirm = MessageBox.Show("¿Eliminar esta imagen?", "Confirmar",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (confirm == DialogResult.Yes)
+                {
+                    try
+                    {
+                        _imagenController.Delete(img.Id);
+                        CargarImagenesDeArticulo();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error al eliminar: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Seleccioná una imagen para eliminar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

@@ -52,6 +52,26 @@ namespace winform_app.Forms
         private System.Windows.Forms.StatusStrip _statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel _lblStatus;
 
+        // PictureBox imagen artículo
+        private System.Windows.Forms.PictureBox _picImagen;
+
+        // TabControl principal
+        private System.Windows.Forms.TabControl _tabControl;
+        private System.Windows.Forms.TabPage _tabArticulos;
+        private System.Windows.Forms.TabPage _tabImagenes;
+
+        // Tab Imágenes
+        private System.Windows.Forms.GroupBox _grpGestionImagenes;
+        private System.Windows.Forms.Label _lblSelArticulo;
+        private System.Windows.Forms.ComboBox _cmbSelArticulo;
+        private System.Windows.Forms.Label _lblImagenesCargadas;
+        private System.Windows.Forms.DataGridView _dgvImagenes;
+        private System.Windows.Forms.PictureBox _picPreviewUrl;
+        private System.Windows.Forms.Label _lblNuevaUrl;
+        private System.Windows.Forms.TextBox _txtNuevaUrl;
+        private System.Windows.Forms.Button _btnAgregarUrl;
+        private System.Windows.Forms.Button _btnEliminarUrl;
+
         /// <summary>
         /// Limpiar los recursos que se estén usando.
         /// </summary>
@@ -99,6 +119,20 @@ namespace winform_app.Forms
             this._lblDetalleCategoriaVal = new System.Windows.Forms.Label();
             this._lblDetalleDesc = new System.Windows.Forms.Label();
             this._lblDetalleDescVal = new System.Windows.Forms.Label();
+            this._picImagen = new System.Windows.Forms.PictureBox();
+            this._tabControl = new System.Windows.Forms.TabControl();
+            this._tabArticulos = new System.Windows.Forms.TabPage();
+            this._tabImagenes = new System.Windows.Forms.TabPage();
+            this._grpGestionImagenes = new System.Windows.Forms.GroupBox();
+            this._lblSelArticulo = new System.Windows.Forms.Label();
+            this._cmbSelArticulo = new System.Windows.Forms.ComboBox();
+            this._lblImagenesCargadas = new System.Windows.Forms.Label();
+            this._dgvImagenes = new System.Windows.Forms.DataGridView();
+            this._picPreviewUrl = new System.Windows.Forms.PictureBox();
+            this._lblNuevaUrl = new System.Windows.Forms.Label();
+            this._txtNuevaUrl = new System.Windows.Forms.TextBox();
+            this._btnAgregarUrl = new System.Windows.Forms.Button();
+            this._btnEliminarUrl = new System.Windows.Forms.Button();
             this._statusStrip = new System.Windows.Forms.StatusStrip();
             this._lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this._toolStrip.SuspendLayout();
@@ -112,6 +146,13 @@ namespace winform_app.Forms
             this._splitDetail.Panel2.SuspendLayout();
             this._splitDetail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._dgvArticulos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._picImagen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._dgvImagenes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._picPreviewUrl)).BeginInit();
+            this._grpGestionImagenes.SuspendLayout();
+            this._tabArticulos.SuspendLayout();
+            this._tabImagenes.SuspendLayout();
+            this._tabControl.SuspendLayout();
             this._grpDetalle.SuspendLayout();
             this._statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -297,6 +338,7 @@ namespace winform_app.Forms
             // 
             // _grpDetalle
             // 
+            this._grpDetalle.Controls.Add(this._picImagen);
             this._grpDetalle.Controls.Add(this._lblDetalleCodigo);
             this._grpDetalle.Controls.Add(this._lblDetalleCodigoVal);
             this._grpDetalle.Controls.Add(this._lblDetalleNombre);
@@ -413,6 +455,137 @@ namespace winform_app.Forms
             this._lblDetalleDescVal.TabIndex = 11;
             this._lblDetalleDescVal.Text = "-";
             // 
+            // _picImagen
+            // 
+            this._picImagen.Location = new System.Drawing.Point(610, 20);
+            this._picImagen.Name = "_picImagen";
+            this._picImagen.Size = new System.Drawing.Size(160, 160);
+            this._picImagen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this._picImagen.TabIndex = 12;
+            this._picImagen.TabStop = false;
+            this._picImagen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            // 
+            // _tabControl
+            // 
+            this._tabControl.Controls.AddRange(new System.Windows.Forms.TabPage[] {
+            this._tabArticulos,
+            this._tabImagenes});
+            this._tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._tabControl.Name = "_tabControl";
+            this._tabControl.SelectedIndex = 0;
+            this._tabControl.TabIndex = 1;
+            // 
+            // _tabArticulos
+            // 
+            this._tabArticulos.Controls.Add(this._splitMain);
+            this._tabArticulos.Name = "_tabArticulos";
+            this._tabArticulos.Padding = new System.Windows.Forms.Padding(3);
+            this._tabArticulos.Text = "Artículos";
+            this._tabArticulos.UseVisualStyleBackColor = true;
+            // 
+            // _tabImagenes
+            // 
+            this._tabImagenes.Controls.Add(this._grpGestionImagenes);
+            this._tabImagenes.Name = "_tabImagenes";
+            this._tabImagenes.Padding = new System.Windows.Forms.Padding(3);
+            this._tabImagenes.Text = "Imágenes";
+            this._tabImagenes.UseVisualStyleBackColor = true;
+            // 
+            // _grpGestionImagenes
+            // 
+            this._grpGestionImagenes.Controls.Add(this._lblSelArticulo);
+            this._grpGestionImagenes.Controls.Add(this._cmbSelArticulo);
+            this._grpGestionImagenes.Controls.Add(this._lblImagenesCargadas);
+            this._grpGestionImagenes.Controls.Add(this._dgvImagenes);
+            this._grpGestionImagenes.Controls.Add(this._picPreviewUrl);
+            this._grpGestionImagenes.Controls.Add(this._lblNuevaUrl);
+            this._grpGestionImagenes.Controls.Add(this._txtNuevaUrl);
+            this._grpGestionImagenes.Controls.Add(this._btnAgregarUrl);
+            this._grpGestionImagenes.Controls.Add(this._btnEliminarUrl);
+            this._grpGestionImagenes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._grpGestionImagenes.Name = "_grpGestionImagenes";
+            this._grpGestionImagenes.TabStop = false;
+            this._grpGestionImagenes.Text = "Gestión de Imágenes";
+            // 
+            // _lblSelArticulo
+            // 
+            this._lblSelArticulo.Location = new System.Drawing.Point(8, 24);
+            this._lblSelArticulo.Name = "_lblSelArticulo";
+            this._lblSelArticulo.Size = new System.Drawing.Size(62, 16);
+            this._lblSelArticulo.Text = "Artículo:";
+            // 
+            // _cmbSelArticulo
+            // 
+            this._cmbSelArticulo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this._cmbSelArticulo.Location = new System.Drawing.Point(76, 21);
+            this._cmbSelArticulo.Name = "_cmbSelArticulo";
+            this._cmbSelArticulo.Size = new System.Drawing.Size(360, 21);
+            this._cmbSelArticulo.TabIndex = 0;
+            this._cmbSelArticulo.SelectedIndexChanged += new System.EventHandler(this.CmbSelArticulo_SelectedIndexChanged);
+            // 
+            // _lblImagenesCargadas
+            // 
+            this._lblImagenesCargadas.Location = new System.Drawing.Point(8, 55);
+            this._lblImagenesCargadas.Name = "_lblImagenesCargadas";
+            this._lblImagenesCargadas.Size = new System.Drawing.Size(140, 16);
+            this._lblImagenesCargadas.Text = "Imágenes cargadas:";
+            // 
+            // _dgvImagenes
+            // 
+            this._dgvImagenes.AllowUserToAddRows = false;
+            this._dgvImagenes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this._dgvImagenes.Location = new System.Drawing.Point(8, 75);
+            this._dgvImagenes.MultiSelect = false;
+            this._dgvImagenes.Name = "_dgvImagenes";
+            this._dgvImagenes.ReadOnly = true;
+            this._dgvImagenes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this._dgvImagenes.Size = new System.Drawing.Size(580, 420);
+            this._dgvImagenes.TabIndex = 1;
+            this._dgvImagenes.SelectionChanged += new System.EventHandler(this.DgvImagenes_SelectionChanged);
+            // 
+            // _picPreviewUrl
+            // 
+            this._picPreviewUrl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._picPreviewUrl.Location = new System.Drawing.Point(606, 75);
+            this._picPreviewUrl.Name = "_picPreviewUrl";
+            this._picPreviewUrl.Size = new System.Drawing.Size(200, 200);
+            this._picPreviewUrl.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this._picPreviewUrl.TabStop = false;
+            // 
+            // _lblNuevaUrl
+            // 
+            this._lblNuevaUrl.Location = new System.Drawing.Point(8, 507);
+            this._lblNuevaUrl.Name = "_lblNuevaUrl";
+            this._lblNuevaUrl.Size = new System.Drawing.Size(65, 16);
+            this._lblNuevaUrl.Text = "Nueva URL:";
+            // 
+            // _txtNuevaUrl
+            // 
+            this._txtNuevaUrl.Location = new System.Drawing.Point(80, 504);
+            this._txtNuevaUrl.Name = "_txtNuevaUrl";
+            this._txtNuevaUrl.Size = new System.Drawing.Size(490, 20);
+            this._txtNuevaUrl.TabIndex = 2;
+            // 
+            // _btnAgregarUrl
+            // 
+            this._btnAgregarUrl.Location = new System.Drawing.Point(580, 502);
+            this._btnAgregarUrl.Name = "_btnAgregarUrl";
+            this._btnAgregarUrl.Size = new System.Drawing.Size(80, 23);
+            this._btnAgregarUrl.TabIndex = 3;
+            this._btnAgregarUrl.Text = "Agregar";
+            this._btnAgregarUrl.UseVisualStyleBackColor = true;
+            this._btnAgregarUrl.Click += new System.EventHandler(this.BtnAgregarUrl_Click);
+            // 
+            // _btnEliminarUrl
+            // 
+            this._btnEliminarUrl.Location = new System.Drawing.Point(670, 502);
+            this._btnEliminarUrl.Name = "_btnEliminarUrl";
+            this._btnEliminarUrl.Size = new System.Drawing.Size(80, 23);
+            this._btnEliminarUrl.TabIndex = 4;
+            this._btnEliminarUrl.Text = "Eliminar";
+            this._btnEliminarUrl.UseVisualStyleBackColor = true;
+            this._btnEliminarUrl.Click += new System.EventHandler(this.BtnEliminarUrl_Click);
+            // 
             // _statusStrip
             // 
             this._statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -431,7 +604,7 @@ namespace winform_app.Forms
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(1000, 620);
-            this.Controls.Add(this._splitMain);
+            this.Controls.Add(this._tabControl);
             this.Controls.Add(this._toolStrip);
             this.Controls.Add(this._statusStrip);
             this.Name = "MainForm";
@@ -448,8 +621,16 @@ namespace winform_app.Forms
             this._splitDetail.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._splitDetail)).EndInit();
             this._splitDetail.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this._picImagen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._dgvArticulos)).EndInit();
             this._grpDetalle.ResumeLayout(false);
+            this._tabArticulos.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this._dgvImagenes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._picPreviewUrl)).EndInit();
+            this._grpGestionImagenes.ResumeLayout(false);
+            this._grpGestionImagenes.PerformLayout();
+            this._tabImagenes.ResumeLayout(false);
+            this._tabControl.ResumeLayout(false);
             this._statusStrip.ResumeLayout(false);
             this._statusStrip.PerformLayout();
             this.ResumeLayout(false);
