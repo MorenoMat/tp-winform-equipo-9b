@@ -9,7 +9,6 @@ namespace winform_app.Forms
 
         // ToolStrip
         private System.Windows.Forms.ToolStrip _toolStrip;
-        private System.Windows.Forms.ToolStripButton _btnNuevo;
         private System.Windows.Forms.ToolStripButton _btnEditar;
         private System.Windows.Forms.ToolStripButton _btnEliminar;
         private System.Windows.Forms.ToolStripSeparator _toolStripSeparator;
@@ -90,7 +89,10 @@ namespace winform_app.Forms
         private void InitializeComponent()
         {
             this._toolStrip = new System.Windows.Forms.ToolStrip();
-            this._btnNuevo = new System.Windows.Forms.ToolStripButton();
+            this._btnNuevo = new System.Windows.Forms.ToolStripDropDownButton();
+            this.articuloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.marcaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.categoriaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this._btnEditar = new System.Windows.Forms.ToolStripButton();
             this._btnEliminar = new System.Windows.Forms.ToolStripButton();
@@ -124,6 +126,7 @@ namespace winform_app.Forms
             this._tabArticulos = new System.Windows.Forms.TabPage();
             this._tabImagenes = new System.Windows.Forms.TabPage();
             this._grpGestionImagenes = new System.Windows.Forms.GroupBox();
+            this.recomendacion = new System.Windows.Forms.Label();
             this._lblSelArticulo = new System.Windows.Forms.Label();
             this._cmbSelArticulo = new System.Windows.Forms.ComboBox();
             this._lblImagenesCargadas = new System.Windows.Forms.Label();
@@ -166,15 +169,40 @@ namespace winform_app.Forms
             this._btnEliminar});
             this._toolStrip.Location = new System.Drawing.Point(0, 0);
             this._toolStrip.Name = "_toolStrip";
-            this._toolStrip.Size = new System.Drawing.Size(1000, 25);
+            this._toolStrip.Size = new System.Drawing.Size(854, 25);
             this._toolStrip.TabIndex = 0;
             // 
             // _btnNuevo
             // 
+            this._btnNuevo.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.articuloToolStripMenuItem,
+            this.marcaToolStripMenuItem,
+            this.categoriaToolStripMenuItem});
             this._btnNuevo.Name = "_btnNuevo";
-            this._btnNuevo.Size = new System.Drawing.Size(46, 22);
+            this._btnNuevo.Size = new System.Drawing.Size(55, 22);
             this._btnNuevo.Text = "Nuevo";
             this._btnNuevo.Click += new System.EventHandler(this.BtnNuevo_Click);
+            // 
+            // articuloToolStripMenuItem
+            // 
+            this.articuloToolStripMenuItem.Name = "articuloToolStripMenuItem";
+            this.articuloToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.articuloToolStripMenuItem.Text = "Articulo";
+            this.articuloToolStripMenuItem.Click += new System.EventHandler(this.btnNuevoArticulo_Click);
+            // 
+            // marcaToolStripMenuItem
+            // 
+            this.marcaToolStripMenuItem.Name = "marcaToolStripMenuItem";
+            this.marcaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.marcaToolStripMenuItem.Text = "Marca";
+            this.marcaToolStripMenuItem.Click += new System.EventHandler(this.btnNuevoMarca_Click);
+            // 
+            // categoriaToolStripMenuItem
+            // 
+            this.categoriaToolStripMenuItem.Name = "categoriaToolStripMenuItem";
+            this.categoriaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.categoriaToolStripMenuItem.Text = "Categoria";
+            this.categoriaToolStripMenuItem.Click += new System.EventHandler(this.btnNuevoCategoria_Click);
             // 
             // _toolStripSeparator
             // 
@@ -209,8 +237,8 @@ namespace winform_app.Forms
             // _splitMain.Panel2
             // 
             this._splitMain.Panel2.Controls.Add(this._splitDetail);
-            this._splitMain.Size = new System.Drawing.Size(986, 541);
-            this._splitMain.SplitterDistance = 200;
+            this._splitMain.Size = new System.Drawing.Size(840, 512);
+            this._splitMain.SplitterDistance = 193;
             this._splitMain.TabIndex = 1;
             // 
             // _grpFiltros
@@ -226,7 +254,7 @@ namespace winform_app.Forms
             this._grpFiltros.Dock = System.Windows.Forms.DockStyle.Fill;
             this._grpFiltros.Location = new System.Drawing.Point(0, 0);
             this._grpFiltros.Name = "_grpFiltros";
-            this._grpFiltros.Size = new System.Drawing.Size(200, 541);
+            this._grpFiltros.Size = new System.Drawing.Size(193, 512);
             this._grpFiltros.TabIndex = 0;
             this._grpFiltros.TabStop = false;
             this._grpFiltros.Text = "Filtros";
@@ -318,8 +346,8 @@ namespace winform_app.Forms
             // _splitDetail.Panel2
             // 
             this._splitDetail.Panel2.Controls.Add(this._grpDetalle);
-            this._splitDetail.Size = new System.Drawing.Size(782, 541);
-            this._splitDetail.SplitterDistance = 321;
+            this._splitDetail.Size = new System.Drawing.Size(643, 512);
+            this._splitDetail.SplitterDistance = 302;
             this._splitDetail.TabIndex = 0;
             // 
             // _dgvArticulos
@@ -332,8 +360,9 @@ namespace winform_app.Forms
             this._dgvArticulos.Name = "_dgvArticulos";
             this._dgvArticulos.ReadOnly = true;
             this._dgvArticulos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this._dgvArticulos.Size = new System.Drawing.Size(782, 321);
+            this._dgvArticulos.Size = new System.Drawing.Size(643, 302);
             this._dgvArticulos.TabIndex = 0;
+            this._dgvArticulos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this._dgvArticulos_CellContentClick);
             this._dgvArticulos.SelectionChanged += new System.EventHandler(this.DgvArticulos_SelectionChanged);
             // 
             // _grpDetalle
@@ -354,7 +383,7 @@ namespace winform_app.Forms
             this._grpDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
             this._grpDetalle.Location = new System.Drawing.Point(0, 0);
             this._grpDetalle.Name = "_grpDetalle";
-            this._grpDetalle.Size = new System.Drawing.Size(782, 216);
+            this._grpDetalle.Size = new System.Drawing.Size(643, 206);
             this._grpDetalle.TabIndex = 0;
             this._grpDetalle.TabStop = false;
             this._grpDetalle.Text = "Detalle";
@@ -362,7 +391,7 @@ namespace winform_app.Forms
             // _picImagen
             // 
             this._picImagen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._picImagen.Location = new System.Drawing.Point(610, 20);
+            this._picImagen.Location = new System.Drawing.Point(462, 20);
             this._picImagen.Name = "_picImagen";
             this._picImagen.Size = new System.Drawing.Size(160, 160);
             this._picImagen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -474,7 +503,7 @@ namespace winform_app.Forms
             this._tabControl.Location = new System.Drawing.Point(0, 25);
             this._tabControl.Name = "_tabControl";
             this._tabControl.SelectedIndex = 0;
-            this._tabControl.Size = new System.Drawing.Size(1000, 573);
+            this._tabControl.Size = new System.Drawing.Size(854, 544);
             this._tabControl.TabIndex = 1;
             // 
             // _tabArticulos
@@ -483,7 +512,7 @@ namespace winform_app.Forms
             this._tabArticulos.Location = new System.Drawing.Point(4, 22);
             this._tabArticulos.Name = "_tabArticulos";
             this._tabArticulos.Padding = new System.Windows.Forms.Padding(3);
-            this._tabArticulos.Size = new System.Drawing.Size(992, 547);
+            this._tabArticulos.Size = new System.Drawing.Size(846, 518);
             this._tabArticulos.TabIndex = 0;
             this._tabArticulos.Text = "Artículos";
             this._tabArticulos.UseVisualStyleBackColor = true;
@@ -494,13 +523,14 @@ namespace winform_app.Forms
             this._tabImagenes.Location = new System.Drawing.Point(4, 22);
             this._tabImagenes.Name = "_tabImagenes";
             this._tabImagenes.Padding = new System.Windows.Forms.Padding(3);
-            this._tabImagenes.Size = new System.Drawing.Size(192, 74);
+            this._tabImagenes.Size = new System.Drawing.Size(846, 518);
             this._tabImagenes.TabIndex = 1;
             this._tabImagenes.Text = "Imágenes";
             this._tabImagenes.UseVisualStyleBackColor = true;
             // 
             // _grpGestionImagenes
             // 
+            this._grpGestionImagenes.Controls.Add(this.recomendacion);
             this._grpGestionImagenes.Controls.Add(this._lblSelArticulo);
             this._grpGestionImagenes.Controls.Add(this._cmbSelArticulo);
             this._grpGestionImagenes.Controls.Add(this._lblImagenesCargadas);
@@ -510,13 +540,31 @@ namespace winform_app.Forms
             this._grpGestionImagenes.Controls.Add(this._txtNuevaUrl);
             this._grpGestionImagenes.Controls.Add(this._btnAgregarUrl);
             this._grpGestionImagenes.Controls.Add(this._btnEliminarUrl);
-            this._grpGestionImagenes.Dock = System.Windows.Forms.DockStyle.Fill;
             this._grpGestionImagenes.Location = new System.Drawing.Point(3, 3);
             this._grpGestionImagenes.Name = "_grpGestionImagenes";
-            this._grpGestionImagenes.Size = new System.Drawing.Size(186, 68);
+            this._grpGestionImagenes.Size = new System.Drawing.Size(844, 541);
             this._grpGestionImagenes.TabIndex = 0;
             this._grpGestionImagenes.TabStop = false;
             this._grpGestionImagenes.Text = "Gestión de Imágenes";
+            this._grpGestionImagenes.Enter += new System.EventHandler(this._grpGestionImagenes_Enter);
+            // 
+            // recomendacion
+            // 
+            this.recomendacion.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.recomendacion.AutoEllipsis = true;
+            this.recomendacion.AutoSize = true;
+            this.recomendacion.CausesValidation = false;
+            this.recomendacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recomendacion.Location = new System.Drawing.Point(602, 391);
+            this.recomendacion.MaximumSize = new System.Drawing.Size(150, 0);
+            this.recomendacion.MinimumSize = new System.Drawing.Size(0, 30);
+            this.recomendacion.Name = "recomendacion";
+            this.recomendacion.Size = new System.Drawing.Size(134, 60);
+            this.recomendacion.TabIndex = 5;
+            this.recomendacion.Text = "Se recomienda URL que termine en . jpg o . png ";
+            this.recomendacion.Click += new System.EventHandler(this.label1_Click);
             // 
             // _lblSelArticulo
             // 
@@ -546,14 +594,16 @@ namespace winform_app.Forms
             // _dgvImagenes
             // 
             this._dgvImagenes.AllowUserToAddRows = false;
+            this._dgvImagenes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this._dgvImagenes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this._dgvImagenes.Location = new System.Drawing.Point(8, 75);
             this._dgvImagenes.MultiSelect = false;
             this._dgvImagenes.Name = "_dgvImagenes";
             this._dgvImagenes.ReadOnly = true;
             this._dgvImagenes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this._dgvImagenes.Size = new System.Drawing.Size(580, 420);
+            this._dgvImagenes.Size = new System.Drawing.Size(580, 376);
             this._dgvImagenes.TabIndex = 1;
+            this._dgvImagenes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this._dgvImagenes_CellContentClick);
             this._dgvImagenes.SelectionChanged += new System.EventHandler(this.DgvImagenes_SelectionChanged);
             // 
             // _picPreviewUrl
@@ -568,22 +618,23 @@ namespace winform_app.Forms
             // 
             // _lblNuevaUrl
             // 
-            this._lblNuevaUrl.Location = new System.Drawing.Point(8, 507);
+            this._lblNuevaUrl.Location = new System.Drawing.Point(27, 473);
             this._lblNuevaUrl.Name = "_lblNuevaUrl";
-            this._lblNuevaUrl.Size = new System.Drawing.Size(65, 16);
+            this._lblNuevaUrl.Size = new System.Drawing.Size(43, 17);
             this._lblNuevaUrl.TabIndex = 3;
-            this._lblNuevaUrl.Text = "Nueva URL:";
+            this._lblNuevaUrl.Text = "Link:";
+            this._lblNuevaUrl.Click += new System.EventHandler(this._lblNuevaUrl_Click);
             // 
             // _txtNuevaUrl
             // 
-            this._txtNuevaUrl.Location = new System.Drawing.Point(80, 504);
+            this._txtNuevaUrl.Location = new System.Drawing.Point(76, 470);
             this._txtNuevaUrl.Name = "_txtNuevaUrl";
             this._txtNuevaUrl.Size = new System.Drawing.Size(490, 20);
             this._txtNuevaUrl.TabIndex = 2;
             // 
             // _btnAgregarUrl
             // 
-            this._btnAgregarUrl.Location = new System.Drawing.Point(580, 502);
+            this._btnAgregarUrl.Location = new System.Drawing.Point(576, 468);
             this._btnAgregarUrl.Name = "_btnAgregarUrl";
             this._btnAgregarUrl.Size = new System.Drawing.Size(80, 23);
             this._btnAgregarUrl.TabIndex = 3;
@@ -593,7 +644,7 @@ namespace winform_app.Forms
             // 
             // _btnEliminarUrl
             // 
-            this._btnEliminarUrl.Location = new System.Drawing.Point(670, 502);
+            this._btnEliminarUrl.Location = new System.Drawing.Point(666, 468);
             this._btnEliminarUrl.Name = "_btnEliminarUrl";
             this._btnEliminarUrl.Size = new System.Drawing.Size(80, 23);
             this._btnEliminarUrl.TabIndex = 4;
@@ -605,9 +656,9 @@ namespace winform_app.Forms
             // 
             this._statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._lblStatus});
-            this._statusStrip.Location = new System.Drawing.Point(0, 598);
+            this._statusStrip.Location = new System.Drawing.Point(0, 569);
             this._statusStrip.Name = "_statusStrip";
-            this._statusStrip.Size = new System.Drawing.Size(1000, 22);
+            this._statusStrip.Size = new System.Drawing.Size(854, 22);
             this._statusStrip.TabIndex = 2;
             // 
             // _lblStatus
@@ -618,11 +669,13 @@ namespace winform_app.Forms
             // 
             // MainForm
             // 
-            this.ClientSize = new System.Drawing.Size(1000, 620);
+            this.ClientSize = new System.Drawing.Size(854, 591);
             this.Controls.Add(this._tabControl);
             this.Controls.Add(this._toolStrip);
             this.Controls.Add(this._statusStrip);
+            this.MinimumSize = new System.Drawing.Size(870, 630);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Gestión de Artículos";
             this._toolStrip.ResumeLayout(false);
             this._toolStrip.PerformLayout();
@@ -654,5 +707,11 @@ namespace winform_app.Forms
         }
 
         #endregion
+
+        private System.Windows.Forms.Label recomendacion;
+        private System.Windows.Forms.ToolStripDropDownButton _btnNuevo;
+        private System.Windows.Forms.ToolStripMenuItem articuloToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem marcaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem categoriaToolStripMenuItem;
     }
 }

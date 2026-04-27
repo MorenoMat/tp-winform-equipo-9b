@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using winform_app.Controllers;
 using winform_app.Forms.Articulo;
+using winform_app.Forms.Categoria;
+using winform_app.Forms.Marca;
 using winform_app.Models;
-
 namespace winform_app.Forms
+
 {
     public partial class MainForm : Form //herencia 
     {   //ReadOnly
@@ -19,11 +21,13 @@ namespace winform_app.Forms
         private readonly CategoriaController _categoriaController = new CategoriaController();
         private readonly ImagenController _imagenController = new ImagenController();
         private CancellationTokenSource _imagenCts;
+
         
         public MainForm()
         {
             InitializeComponent();
             Load += MainForm_Load; // antes de q termine de cargar la ventana  inicia esto 
+
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -141,11 +145,9 @@ namespace winform_app.Forms
         // Botón Nuevo
         private void BtnNuevo_Click(object sender, EventArgs e)
         {
-            using (var form = new ArticuloEditForm())
-            {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                    CargarArticulos();
-            }
+            CargarFiltros();
+
+
         }
 
         // Botón Editar
@@ -294,7 +296,7 @@ namespace winform_app.Forms
         {
             return await DescargarBitmapDesdeUrlAsync(url) ?? CrearImagenPlaceholder();
         }
-
+  
         private static async Task<Bitmap> DescargarBitmapDesdeUrlAsync(string url)
         {
             try
@@ -304,7 +306,8 @@ namespace winform_app.Forms
                     using (var wc = new WebClient())
                     {
                         wc.Headers.Add("User-Agent", "Mozilla/5.0");
-                        return wc.DownloadData(url);
+
+                        return wc.DownloadData(url); // dale a continuar que  ya va entrar al catch
                     }
                 });
 
@@ -312,8 +315,14 @@ namespace winform_app.Forms
                 using (var tmp = new Bitmap(ms))
                     return new Bitmap(tmp);
             }
-            catch
+            catch (WebException )
             {
+                MessageBox.Show("Proba con otra imagen, link mala onda");
+                return null;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
                 return null;
             }
         }
@@ -391,6 +400,58 @@ namespace winform_app.Forms
         }
 
         private void _picImagen_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _grpGestionImagenes_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _lblNuevaUrl_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _dgvArticulos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnNuevoArticulo_Click(object sender, EventArgs e)
+        {
+            using (var form = new ArticuloEditForm())
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                    CargarArticulos();
+            }
+        }
+
+        private void btnNuevoMarca_Click(object sender, EventArgs e)
+        {
+            using (var form = new MarcaNewForm())
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                    CargarArticulos();
+            } 
+        }
+
+        private void btnNuevoCategoria_Click(object sender, EventArgs e)
+        {
+            using (var form = new CategoriaNewForm())
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                    CargarArticulos();
+            }
+        }
+
+        private void _dgvImagenes_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

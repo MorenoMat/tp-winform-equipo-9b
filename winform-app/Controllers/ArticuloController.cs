@@ -80,11 +80,6 @@ namespace winform_app.Controllers
 
                 datos.ejecutarLectura();
 
-
-
-
-
-
                 while (datos.Lector.Read()) // recorre mientras sea true 1 por 1
                 {
                     Articulo aux = new Articulo(); // guardo los datos en un obj articulo
@@ -103,7 +98,6 @@ namespace winform_app.Controllers
                     lista.Add(aux); // guardo obj articulo en la lista 
                 }
 
-               
                 return lista;
                
             }

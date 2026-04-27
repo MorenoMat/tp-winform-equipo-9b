@@ -25,8 +25,25 @@ namespace winform_app.Models
             }
             return lista;
         }
+        // excludeId: en modo edición se pasa el Id del artículo actual para no compararlo consigo mismo
+        public static bool ExisteConNombre(string marca, int excludeId = 0)
+        {
+            const string sql = "SELECT COUNT(*) FROM MARCAS WHERE LOWER(Descripcion) = LOWER(@marca) AND Id <> @ExcludeId"; //mismo nombre y que  tenga distinto id
 
-    public override string ToString() // sobreescribo ToString() xq si no me devuelve el nombre de la clase 
+            using (var datos = new AccesoDatos())
+            {
+                datos.setearConsulta(sql);
+                datos.setearParametro("@marca", marca);
+                datos.setearParametro("@ExcludeId", excludeId);
+                datos.ejecutarLectura();
+                var lector = datos.Lector;
+                var count = lector != null && lector.Read() ? lector.GetInt32(0) : 0;
+                datos.cerrarConexion();
+                return count > 0;
+            }
+        }
+
+        public override string ToString() // sobreescribo ToString() xq si no me devuelve el nombre de la clase 
         {
             return Descripcion;
         }
