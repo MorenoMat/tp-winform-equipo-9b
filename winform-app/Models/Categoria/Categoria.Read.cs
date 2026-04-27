@@ -10,7 +10,7 @@ namespace winform_app.Models
             var lista = new List<Categoria>();
             using (var datos = new AccesoDatos())
             {
-                datos.ejecutarAccion("SELECT Id, Descripcion FROM CATEGORIAS ORDER BY Descripcion");
+                datos.setearConsulta("SELECT Id, Descripcion FROM CATEGORIAS ORDER BY Descripcion");
                 datos.ejecutarLectura();
                 var lector = datos.Lector;
                 while (lector != null && lector.Read())
@@ -31,7 +31,7 @@ namespace winform_app.Models
             // lower convierte a minúsculas para comparar 
             using (var datos = new AccesoDatos())
             {
-                datos.ejecutarAccion(sql);
+                datos.setearConsulta(sql);
                 datos.setearParametro("@categoria", categoria);
                 datos.setearParametro("@ExcludeId", excludeId);
                 datos.ejecutarLectura();

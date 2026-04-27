@@ -75,6 +75,7 @@ namespace winform_app.Forms.Categoria
                 // Refrescar la grilla y limpiar el textbox
                 _dgvCategorias.DataSource = _categoriaController.GetAll();
                                 txtBNuevaCategoria.Clear();
+              
 
             }
             catch (Exception ex)
@@ -90,6 +91,8 @@ namespace winform_app.Forms.Categoria
 
         private void _btnCancelarCategoriaNueva_Click(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.Cancel;
+            Close();
 
         }
 

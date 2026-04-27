@@ -145,8 +145,9 @@ namespace winform_app.Forms
         // Botón Nuevo
         private void BtnNuevo_Click(object sender, EventArgs e)
         {
+            CargarFiltros();
 
-            
+
         }
 
         // Botón Editar

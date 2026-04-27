@@ -9,11 +9,11 @@ namespace winform_app.Models
         // Implementar en caso de ser necesario.
         public void Add()
         {
-            var sql = "iNSERT INTO  MARCAS(Descripcion=@Marca)";
+            var sql = "INSERT INTO MARCAS (Descripcion) VALUES (@Marca)";
             using (var datos = new AccesoDatos())
             {
-                datos.ejecutarAccion(sql);
                 datos.setearParametro("@Marca", Descripcion);
+                datos.setearConsulta(sql);
                 datos.ejecutarLectura();
                 datos.cerrarConexion();
 

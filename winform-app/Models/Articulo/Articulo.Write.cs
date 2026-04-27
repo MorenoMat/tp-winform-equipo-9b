@@ -12,7 +12,7 @@ namespace winform_app.Models
 
             using (var datos = new AccesoDatos())
             {
-                datos.ejecutarAccion(sql);
+                datos.setearConsulta(sql);
                 datos.setearParametro("@Codigo", Codigo);
                 datos.setearParametro("@Nombre", Nombre);
                 datos.setearParametro("@Precio", Precio);

@@ -10,7 +10,7 @@ namespace winform_app.Models
             var lista = new List<Marca>();
             using (var datos = new AccesoDatos())
             {
-                datos.ejecutarAccion("SELECT Id, Descripcion FROM MARCAS ORDER BY Descripcion");
+                datos.setearConsulta("SELECT Id, Descripcion FROM MARCAS ORDER BY Descripcion");
                 datos.ejecutarLectura();
                 var lector = datos.Lector;
                 while (lector != null && lector.Read())
@@ -32,7 +32,7 @@ namespace winform_app.Models
 
             using (var datos = new AccesoDatos())
             {
-                datos.ejecutarAccion(sql);
+                datos.setearConsulta(sql);
                 datos.setearParametro("@marca", marca);
                 datos.setearParametro("@ExcludeId", excludeId);
                 datos.ejecutarLectura();

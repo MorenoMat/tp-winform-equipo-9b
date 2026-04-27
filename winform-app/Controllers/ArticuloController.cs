@@ -65,7 +65,7 @@ namespace winform_app.Controllers
                     consulta += " AND C.Descripcion = @categoria ";
 
                 // --- PRIMERO SETEAMOS LA CONSULTA FINAL ---
-                datos.ejecutarAccion(consulta);
+                datos.setearConsulta(consulta);
 
                 // --- DESPUÉS SETEAMOS LOS VALORES DE LOS @ ---
                 if (!string.IsNullOrWhiteSpace(nombre))
