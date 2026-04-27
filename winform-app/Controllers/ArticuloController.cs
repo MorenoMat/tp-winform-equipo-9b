@@ -65,7 +65,7 @@ namespace winform_app.Controllers
                     consulta += " AND C.Descripcion = @categoria ";
 
                 // --- PRIMERO SETEAMOS LA CONSULTA FINAL ---
-                datos.setearConsulta(consulta);
+                datos.ejecutarAccion(consulta);
 
                 // --- DESPUÉS SETEAMOS LOS VALORES DE LOS @ ---
                 if (!string.IsNullOrWhiteSpace(nombre))
@@ -79,11 +79,6 @@ namespace winform_app.Controllers
 
 
                 datos.ejecutarLectura();
-
-
-
-
-
 
                 while (datos.Lector.Read()) // recorre mientras sea true 1 por 1
                 {
@@ -103,7 +98,6 @@ namespace winform_app.Controllers
                     lista.Add(aux); // guardo obj articulo en la lista 
                 }
 
-               
                 return lista;
                
             }
