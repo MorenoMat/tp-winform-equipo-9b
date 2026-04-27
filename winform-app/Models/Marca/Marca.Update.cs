@@ -4,5 +4,6 @@ namespace winform_app.Models
     {
         // Actualizaciones de Marca (Update)
         // Implementar en caso de ser necesario.
+
     }
 }
