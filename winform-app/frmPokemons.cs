@@ -229,5 +229,10 @@ namespace winform_app
             }
 
         }
+
+        private void dgvPokemons_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

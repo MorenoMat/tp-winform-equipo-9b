@@ -16,7 +16,8 @@ namespace winform_app
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmPokemons());
+            Application.Run(new frmArticulos());
         }
     }
 }
+    
