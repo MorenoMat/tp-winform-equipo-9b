@@ -46,7 +46,7 @@ namespace negocio
             }
         }
 
-        public List<Articulo> buscarPorNombre(string nombre)
+        public List<Articulo> filtrar(string nombre, int idCategoria, int idMarca)
         {
             List<Articulo> lista = new List<Articulo>();
             AccesoDatos datos = new AccesoDatos();
@@ -58,8 +58,12 @@ namespace negocio
                                      "From ARTICULOS A, MARCAS M, CATEGORIAS C " +
                                      "Where M.Id = A.IdMarca " +
                                      "And C.Id = A.IdCategoria " +
-                                     "And A.Nombre Like @nombre");
+                                     "And A.Nombre Like @nombre " +
+                                     "And (@idCategoria = 0 Or C.Id = @idCategoria) " +
+                                     "And (@idMarca = 0 Or M.Id = @idMarca)");
                 datos.setearParametro("@nombre", "%" + nombre + "%");
+                datos.setearParametro("@idCategoria", idCategoria);
+                datos.setearParametro("@idMarca", idMarca);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {

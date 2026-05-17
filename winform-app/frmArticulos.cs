@@ -42,6 +42,7 @@ namespace winform_app
         {
             CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
             List<Categoria> categorias = categoriaNegocio.listarTodos();
+            categorias.Insert(0, new Categoria { id = 0, descripcion = "Todas" });
             comboBox1.DataSource = categorias;
             comboBox1.DisplayMember = "descripcion";
             comboBox1.ValueMember = "id";
@@ -51,6 +52,7 @@ namespace winform_app
         {
             MarcaNegocio marcaNegocio = new MarcaNegocio();
             List<Marca> marcas = marcaNegocio.listarTodos();
+            marcas.Insert(0, new Marca { id = 0, descripcion = "Todas" });
             comboBox2.DataSource = marcas;
             comboBox2.DisplayMember = "descripcion";
             comboBox2.ValueMember = "id";
@@ -73,8 +75,8 @@ namespace winform_app
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ArticuloNegocio negocio = new ArticuloNegocio();
-            List<Articulo> lista = negocio.buscarPorNombre(txtFiltro.Text);
+            ArticuloNegocio articuloNegocio = new ArticuloNegocio();
+            List<Articulo> lista = articuloNegocio.filtrar(txtFiltro.Text, (int)comboBox1.SelectedValue, (int)comboBox2.SelectedValue);
 
             dgvArticulos.DataSource = null;
             dgvArticulos.DataSource = lista;
