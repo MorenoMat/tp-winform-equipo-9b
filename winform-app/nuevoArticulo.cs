@@ -81,7 +81,14 @@ namespace winform_app
             articulo.categoria = comboBox2.SelectedItem as Categoria;
 
             ArticuloNegocio negocio = new ArticuloNegocio();
-            negocio.agregar(articulo);
+            int nuevoId = negocio.agregar(articulo);
+
+            Imagen imagenSeleccionada = comboBox3.SelectedItem as Imagen;
+            if (imagenSeleccionada != null)
+            {
+                ImagenNegocio imagenNegocio = new ImagenNegocio();
+                imagenNegocio.actualizarArticulo(imagenSeleccionada.id, nuevoId);
+            }
 
             MessageBox.Show("Artículo agregado correctamente.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();

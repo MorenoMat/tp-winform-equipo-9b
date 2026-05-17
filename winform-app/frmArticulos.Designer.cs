@@ -208,6 +208,7 @@ namespace winform_app
             this.imagenToolStripMenuItem.Name = "imagenToolStripMenuItem";
             this.imagenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.imagenToolStripMenuItem.Text = "Imagen";
+            this.imagenToolStripMenuItem.Click += new System.EventHandler(this.imagenToolStripMenuItem_Click);
             // 
             // frmArticulos
             // 

@@ -208,5 +208,11 @@ namespace winform_app
             traerTodosLosArticulos();
             cargar_combo_categoria();
         }
+
+        private void imagenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            nuevaImagen nuevaImagenfrm = new nuevaImagen();
+            nuevaImagenfrm.ShowDialog();
+        }
     }
 }
