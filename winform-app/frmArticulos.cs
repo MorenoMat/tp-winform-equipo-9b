@@ -214,5 +214,18 @@ namespace winform_app
             nuevaImagen nuevaImagenfrm = new nuevaImagen();
             nuevaImagenfrm.ShowDialog();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var art = ArticuloSeleccionado();
+            if (art == null)
+            {
+                MessageBox.Show("Seleccioná un artículo para editar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            editarArticulo frm = new editarArticulo(art);
+            frm.ShowDialog();
+            traerTodosLosArticulos();
+        }
     }
 }

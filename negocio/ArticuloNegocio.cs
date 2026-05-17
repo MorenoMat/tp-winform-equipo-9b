@@ -119,6 +119,33 @@ namespace negocio
             }
         }
 
+        public void actualizar(Articulo articulo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("Update ARTICULOS Set Codigo = @codigo, Nombre = @nombre, Descripcion = @descripcion, " +
+                                     "Precio = @precio, IdMarca = @idMarca, IdCategoria = @idCategoria " +
+                                     "Where Id = @id");
+                datos.setearParametro("@codigo", articulo.codigo);
+                datos.setearParametro("@nombre", articulo.nombre);
+                datos.setearParametro("@descripcion", articulo.descripcion);
+                datos.setearParametro("@precio", articulo.precio);
+                datos.setearParametro("@idMarca", articulo.marca.id);
+                datos.setearParametro("@idCategoria", articulo.categoria.id);
+                datos.setearParametro("@id", articulo.id);
+                datos.ejecutarAccion();
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public void borrar(int id)
         {
             AccesoDatos datos = new AccesoDatos();
