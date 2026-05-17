@@ -200,5 +200,13 @@ namespace winform_app
             traerTodosLosArticulos();
             cargar_combo_marca();
         }
+
+        private void categoriaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            nuevaCategoria nuevaCategoriafrm = new nuevaCategoria();
+            nuevaCategoriafrm.ShowDialog();
+            traerTodosLosArticulos();
+            cargar_combo_categoria();
+        }
     }
 }
