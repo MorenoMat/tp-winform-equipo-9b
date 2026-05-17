@@ -190,6 +190,15 @@ namespace winform_app
         {
             nuevoArticulo nuevoArticulofrm = new nuevoArticulo();
             nuevoArticulofrm.ShowDialog();
+            traerTodosLosArticulos();
+        }
+
+        private void marcaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            nuevaMarca nuevaMarcafrm = new nuevaMarca();
+            nuevaMarcafrm.ShowDialog();
+            traerTodosLosArticulos();
+            cargar_combo_marca();
         }
     }
 }

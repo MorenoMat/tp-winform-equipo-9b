@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="nuevaMarca.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="nuevaMarca.Designer.cs">
+      <DependentUpon>nuevaMarca.cs</DependentUpon>
+    </Compile>
     <Compile Include="nuevoArticulo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +69,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmArticulos.resx">
       <DependentUpon>frmArticulos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="nuevaMarca.resx">
+      <DependentUpon>nuevaMarca.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="nuevoArticulo.resx">
       <DependentUpon>nuevoArticulo.cs</DependentUpon>
