@@ -93,6 +93,31 @@ namespace negocio
             }
         }
 
+        public void agregar(Articulo articulo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("Insert Into ARTICULOS (Codigo, Nombre, Descripcion, Precio, IdMarca, IdCategoria) " +
+                                     "Values (@codigo, @nombre, @descripcion, @precio, @idMarca, @idCategoria)");
+                datos.setearParametro("@codigo", articulo.codigo);
+                datos.setearParametro("@nombre", articulo.nombre);
+                datos.setearParametro("@descripcion", articulo.descripcion);
+                datos.setearParametro("@precio", articulo.precio);
+                datos.setearParametro("@idMarca", articulo.marca.id);
+                datos.setearParametro("@idCategoria", articulo.categoria.id);
+                datos.ejecutarAccion();
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public void borrar(int id)
         {
             AccesoDatos datos = new AccesoDatos();

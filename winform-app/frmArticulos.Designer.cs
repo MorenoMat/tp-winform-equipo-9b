@@ -29,8 +29,15 @@ namespace winform_app
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.nuevoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.articuloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.marcaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.categoriaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imagenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvArticulos
@@ -134,9 +141,9 @@ namespace winform_app
             // button3
             // 
             this.button3.BackColor = System.Drawing.Color.Crimson;
-            this.button3.Location = new System.Drawing.Point(919, 351);
+            this.button3.Location = new System.Drawing.Point(878, 341);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.Size = new System.Drawing.Size(116, 87);
             this.button3.TabIndex = 15;
             this.button3.Text = "BORRAR";
             this.button3.UseVisualStyleBackColor = false;
@@ -151,6 +158,54 @@ namespace winform_app
             this.pictureBox1.TabIndex = 16;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.nuevoToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1035, 24);
+            this.menuStrip1.TabIndex = 17;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // nuevoToolStripMenuItem
+            // 
+            this.nuevoToolStripMenuItem.BackColor = System.Drawing.Color.Yellow;
+            this.nuevoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.articuloToolStripMenuItem,
+            this.marcaToolStripMenuItem,
+            this.categoriaToolStripMenuItem,
+            this.imagenToolStripMenuItem});
+            this.nuevoToolStripMenuItem.Name = "nuevoToolStripMenuItem";
+            this.nuevoToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.nuevoToolStripMenuItem.Text = "Nuevo";
+            // 
+            // articuloToolStripMenuItem
+            // 
+            this.articuloToolStripMenuItem.Name = "articuloToolStripMenuItem";
+            this.articuloToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.articuloToolStripMenuItem.Text = "Articulo";
+            this.articuloToolStripMenuItem.Click += new System.EventHandler(this.articuloToolStripMenuItem_Click);
+            // 
+            // marcaToolStripMenuItem
+            // 
+            this.marcaToolStripMenuItem.Name = "marcaToolStripMenuItem";
+            this.marcaToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.marcaToolStripMenuItem.Text = "Marca";
+            // 
+            // categoriaToolStripMenuItem
+            // 
+            this.categoriaToolStripMenuItem.Name = "categoriaToolStripMenuItem";
+            this.categoriaToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.categoriaToolStripMenuItem.Text = "Categoria";
+            // 
+            // imagenToolStripMenuItem
+            // 
+            this.imagenToolStripMenuItem.Name = "imagenToolStripMenuItem";
+            this.imagenToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.imagenToolStripMenuItem.Text = "Imagen";
             // 
             // frmArticulos
             // 
@@ -169,11 +224,14 @@ namespace winform_app
             this.Controls.Add(this.buscar);
             this.Controls.Add(this.label_filtros);
             this.Controls.Add(this.dgvArticulos);
+            this.Controls.Add(this.menuStrip1);
             this.Name = "frmArticulos";
             this.Text = "Artículos";
             this.Load += new System.EventHandler(this.frmArticulos_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -193,5 +251,11 @@ namespace winform_app
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem nuevoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem articuloToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem marcaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem categoriaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem imagenToolStripMenuItem;
     }
 }

@@ -113,6 +113,7 @@ namespace winform_app
         {
             dgvArticulos.DataSource = null;
             dgvArticulos.DataSource = lista;
+            dgvArticulos.Columns["id"].Visible = false;
 
             dgvArticulos.Columns["id"].HeaderText = "ID";
             dgvArticulos.Columns["codigo"].HeaderText = "Código";
@@ -184,6 +185,11 @@ namespace winform_app
                 cargarImagen(imagenes[0].imagenUrl);
             else
                 cargarImagen("");
+        }
+        private void articuloToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            nuevoArticulo nuevoArticulofrm = new nuevoArticulo();
+            nuevoArticulofrm.ShowDialog();
         }
     }
 }

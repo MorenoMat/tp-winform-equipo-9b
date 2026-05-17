@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="nuevoArticulo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="nuevoArticulo.Designer.cs">
+      <DependentUpon>nuevoArticulo.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmArticulos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -57,6 +63,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmArticulos.resx">
       <DependentUpon>frmArticulos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="nuevoArticulo.resx">
+      <DependentUpon>nuevoArticulo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
