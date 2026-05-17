@@ -1,8 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using dominio;
 using negocio;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Windows.Forms;
 
 namespace winform_app
 {
@@ -28,14 +30,7 @@ namespace winform_app
             dgvArticulos.DataSource = null;
             dgvArticulos.DataSource = lista;
 
-            dgvArticulos.Columns["marca"].Visible = false;
-            dgvArticulos.Columns["categoria"].Visible = false;
-
-            dgvArticulos.Columns["id"].HeaderText = "ID";
-            dgvArticulos.Columns["codigo"].HeaderText = "Código";
-            dgvArticulos.Columns["nombre"].HeaderText = "Nombre";
-            dgvArticulos.Columns["descripcion"].HeaderText = "Descripción";
-            dgvArticulos.Columns["precio"].HeaderText = "Precio";
+            this.armarTabla(lista);
         }
 
         private void cargar_combo_categoria()
@@ -80,15 +75,7 @@ namespace winform_app
 
             dgvArticulos.DataSource = null;
             dgvArticulos.DataSource = lista;
-
-            dgvArticulos.Columns["marca"].Visible = false;
-            dgvArticulos.Columns["categoria"].Visible = false;
-
-            dgvArticulos.Columns["id"].HeaderText = "ID";
-            dgvArticulos.Columns["codigo"].HeaderText = "Código";
-            dgvArticulos.Columns["nombre"].HeaderText = "Nombre";
-            dgvArticulos.Columns["descripcion"].HeaderText = "Descripción";
-            dgvArticulos.Columns["precio"].HeaderText = "Precio";
+            this.armarTabla(lista);
         }
 
         private void label1_Click_2(object sender, EventArgs e)
@@ -104,6 +91,57 @@ namespace winform_app
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            txtFiltro.Text = string.Empty;
+            comboBox1.SelectedIndex = 0;
+            comboBox2.SelectedIndex = 0;
+
+            ArticuloNegocio articuloNegocio = new ArticuloNegocio();
+            List<Articulo> lista = articuloNegocio.listarTodos();
+
+            dgvArticulos.DataSource = null;
+            dgvArticulos.DataSource = lista;
+
+            this.armarTabla(lista);
+        }
+
+        private void armarTabla(List<Articulo> lista)
+        {
+            dgvArticulos.DataSource = null;
+            dgvArticulos.DataSource = lista;
+
+            dgvArticulos.Columns["id"].HeaderText = "ID";
+            dgvArticulos.Columns["codigo"].HeaderText = "Código";
+            dgvArticulos.Columns["nombre"].HeaderText = "Nombre";
+            dgvArticulos.Columns["descripcion"].HeaderText = "Descripción";
+            dgvArticulos.Columns["precio"].HeaderText = "Precio";
+            dgvArticulos.Columns["marca"].HeaderText = "Marca";
+            dgvArticulos.Columns["categoria"].HeaderText = "Categoría";
+        }
+
+        private Articulo ArticuloSeleccionado()
+        {
+            if (dgvArticulos.CurrentRow == null) return null;
+            return dgvArticulos.CurrentRow.DataBoundItem as Articulo;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var art = ArticuloSeleccionado();
+            if (art == null)
+            {
+                MessageBox.Show("Seleccioná un artículo para eliminar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            DialogResult resultado = MessageBox.Show("¿Estás seguro que querés borrar el artículo " + art.nombre + "?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (resultado == DialogResult.Yes)
+            {
+                // lógica de borrado
+            }
         }
     }
 }
