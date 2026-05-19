@@ -115,13 +115,14 @@ namespace winform_app
             dgvArticulos.DataSource = lista;
             dgvArticulos.Columns["id"].Visible = false;
 
-            dgvArticulos.Columns["id"].HeaderText = "ID";
-            dgvArticulos.Columns["codigo"].HeaderText = "Código";
+          //  dgvArticulos.Columns["id"].HeaderText = "ID";
             dgvArticulos.Columns["nombre"].HeaderText = "Nombre";
             dgvArticulos.Columns["descripcion"].HeaderText = "Descripción";
             dgvArticulos.Columns["precio"].HeaderText = "Precio";
+            dgvArticulos.Columns["precio"].DefaultCellStyle.Format = "C0"; // le mande formato con 0 centavos
             dgvArticulos.Columns["marca"].HeaderText = "Marca";
             dgvArticulos.Columns["categoria"].HeaderText = "Categoría";
+            dgvArticulos.Columns["codigo"].HeaderText = "Código";
         }
 
         private Articulo ArticuloSeleccionado()
@@ -226,6 +227,16 @@ namespace winform_app
             editarArticulo frm = new editarArticulo(art);
             frm.ShowDialog();
             traerTodosLosArticulos();
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void dgvArticulos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

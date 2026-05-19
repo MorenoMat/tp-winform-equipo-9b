@@ -22,7 +22,6 @@ namespace negocio
                 {
                     Articulo aux = new Articulo();
                     aux.id = (int)datos.Lector["Id"];
-                    aux.codigo = (string)datos.Lector["Codigo"];
                     aux.nombre = (string)datos.Lector["Nombre"];
                     aux.descripcion = (string)datos.Lector["Descripcion"];
                     aux.precio = (decimal)datos.Lector["Precio"];
@@ -32,6 +31,7 @@ namespace negocio
                     aux.categoria = new Categoria();
                     aux.categoria.id = (int)datos.Lector["IdCategoria"];
                     aux.categoria.descripcion = (string)datos.Lector["Categoria"];
+                    aux.codigo = (string)datos.Lector["Codigo"];
                     lista.Add(aux);
                 }
                 return lista;
